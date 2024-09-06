@@ -359,6 +359,13 @@ ul{
     overflow: hidden;
 }
 
+h2{
+    color: black;
+}
+label{
+    color: black;
+}
+
 .highlight-text-full {
     opacity: 1;
     max-height: 1000px;

@@ -220,3 +220,61 @@ function closeEmailPopup() {
         }, 500);
     }
 }
+
+function toggleText(event) {
+    const button = event.target;
+    const shortText = button.parentElement.querySelector('.highlight-text-short');
+    const fullText = button.parentElement.querySelector('.highlight-text-full');
+
+    if (fullText.classList.contains('hidden')) {
+        fullText.classList.remove('hidden');
+        shortText.classList.add('hidden');
+        button.textContent = "Read Less";
+    } else {
+        fullText.classList.add('hidden');
+        shortText.classList.remove('hidden');
+        button.textContent = "Read More";
+    }
+}
+
+function initializeReadMore() {
+    document.querySelectorAll('.toggle-text').forEach(button => {
+        button.addEventListener('click', toggleText);
+    });
+}
+
+
+function initializeSliders() {
+    const promotionContainers = document.querySelectorAll('.promotion');
+
+    promotionContainers.forEach(container => {
+        const paymentContainer = container.querySelector('.promotion-payments');
+        const paymentSlider = paymentContainer.querySelector('.payment-slider');
+        const payments = Array.from(paymentSlider.querySelectorAll('img'));
+        const leftArrow = paymentContainer.querySelector('.left-arrow');
+        const rightArrow = paymentContainer.querySelector('.right-arrow');
+        let currentIndex = 0;
+        const maxVisible = 3;
+
+        const updateVisiblePayments = () => {
+            const offset = -currentIndex * (payments[0].offsetWidth + 10);
+            paymentSlider.style.transform = `translateX(${offset}px)`;
+        };
+
+        leftArrow.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex -= 2;
+                updateVisiblePayments();
+            }
+        });
+
+        rightArrow.addEventListener('click', () => {
+            if (currentIndex + maxVisible < payments.length) {
+                currentIndex += 2;
+                updateVisiblePayments();
+            }
+        });
+
+        updateVisiblePayments();
+    });
+}
